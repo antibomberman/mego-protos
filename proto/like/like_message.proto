@@ -37,6 +37,7 @@ message DeleteResponse{
   int64  post_id = 2;
   int64  comment_id = 3;
 }
+
 message CountResponse{
   int32 count = 1;
 }
