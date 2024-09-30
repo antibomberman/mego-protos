@@ -47,7 +47,7 @@ message CreateResponse{
 }
 
 message DeleteRequest{
-  Comment comment = 1;
+  string id = 1;
 }
 
 message DeleteResponse{
