@@ -33,7 +33,6 @@ message GetObjectUrlResponse {
   string content_type = 2;
   string url = 3;
 }
-
 message DeleteObjectRequest {
   string file_name = 1;
 }
