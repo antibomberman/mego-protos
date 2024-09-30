@@ -19,11 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LikeService_Exists_FullMethodName = "/like.LikeService/Exists"
-	LikeService_Add_FullMethodName    = "/like.LikeService/Add"
-	LikeService_Delete_FullMethodName = "/like.LikeService/Delete"
-	LikeService_Count_FullMethodName  = "/like.LikeService/Count"
-	LikeService_Find_FullMethodName   = "/like.LikeService/Find"
+	LikeService_Exists_FullMethodName         = "/like.LikeService/Exists"
+	LikeService_Add_FullMethodName            = "/like.LikeService/Add"
+	LikeService_Delete_FullMethodName         = "/like.LikeService/Delete"
+	LikeService_Count_FullMethodName          = "/like.LikeService/Count"
+	LikeService_FindByPosts_FullMethodName    = "/like.LikeService/FindByPosts"
+	LikeService_FindByComments_FullMethodName = "/like.LikeService/FindByComments"
 )
 
 // LikeServiceClient is the client API for LikeService service.
@@ -34,7 +35,8 @@ type LikeServiceClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteRequest, error)
 	Count(ctx context.Context, in *CountRequest, opts ...grpc.CallOption) (*CountResponse, error)
-	Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error)
+	FindByPosts(ctx context.Context, in *FindByPostsRequest, opts ...grpc.CallOption) (*FindByPostsResponse, error)
+	FindByComments(ctx context.Context, in *FindByCommentsRequest, opts ...grpc.CallOption) (*FindByCommentsResponse, error)
 }
 
 type likeServiceClient struct {
@@ -85,10 +87,20 @@ func (c *likeServiceClient) Count(ctx context.Context, in *CountRequest, opts ..
 	return out, nil
 }
 
-func (c *likeServiceClient) Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error) {
+func (c *likeServiceClient) FindByPosts(ctx context.Context, in *FindByPostsRequest, opts ...grpc.CallOption) (*FindByPostsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(FindResponse)
-	err := c.cc.Invoke(ctx, LikeService_Find_FullMethodName, in, out, cOpts...)
+	out := new(FindByPostsResponse)
+	err := c.cc.Invoke(ctx, LikeService_FindByPosts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *likeServiceClient) FindByComments(ctx context.Context, in *FindByCommentsRequest, opts ...grpc.CallOption) (*FindByCommentsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(FindByCommentsResponse)
+	err := c.cc.Invoke(ctx, LikeService_FindByComments_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +115,8 @@ type LikeServiceServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	Delete(context.Context, *DeleteRequest) (*DeleteRequest, error)
 	Count(context.Context, *CountRequest) (*CountResponse, error)
-	Find(context.Context, *FindRequest) (*FindResponse, error)
+	FindByPosts(context.Context, *FindByPostsRequest) (*FindByPostsResponse, error)
+	FindByComments(context.Context, *FindByCommentsRequest) (*FindByCommentsResponse, error)
 	mustEmbedUnimplementedLikeServiceServer()
 }
 
@@ -126,8 +139,11 @@ func (UnimplementedLikeServiceServer) Delete(context.Context, *DeleteRequest) (*
 func (UnimplementedLikeServiceServer) Count(context.Context, *CountRequest) (*CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Count not implemented")
 }
-func (UnimplementedLikeServiceServer) Find(context.Context, *FindRequest) (*FindResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
+func (UnimplementedLikeServiceServer) FindByPosts(context.Context, *FindByPostsRequest) (*FindByPostsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindByPosts not implemented")
+}
+func (UnimplementedLikeServiceServer) FindByComments(context.Context, *FindByCommentsRequest) (*FindByCommentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindByComments not implemented")
 }
 func (UnimplementedLikeServiceServer) mustEmbedUnimplementedLikeServiceServer() {}
 func (UnimplementedLikeServiceServer) testEmbeddedByValue()                     {}
@@ -222,20 +238,38 @@ func _LikeService_Count_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LikeService_Find_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(FindRequest)
+func _LikeService_FindByPosts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindByPostsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LikeServiceServer).Find(ctx, in)
+		return srv.(LikeServiceServer).FindByPosts(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LikeService_Find_FullMethodName,
+		FullMethod: LikeService_FindByPosts_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LikeServiceServer).Find(ctx, req.(*FindRequest))
+		return srv.(LikeServiceServer).FindByPosts(ctx, req.(*FindByPostsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LikeService_FindByComments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(FindByCommentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LikeServiceServer).FindByComments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: LikeService_FindByComments_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LikeServiceServer).FindByComments(ctx, req.(*FindByCommentsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -264,8 +298,12 @@ var LikeService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LikeService_Count_Handler,
 		},
 		{
-			MethodName: "Find",
-			Handler:    _LikeService_Find_Handler,
+			MethodName: "FindByPosts",
+			Handler:    _LikeService_FindByPosts_Handler,
+		},
+		{
+			MethodName: "FindByComments",
+			Handler:    _LikeService_FindByComments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

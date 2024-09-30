@@ -43,11 +43,19 @@ message CountResponse{
 message CountRequest{
   int32  post_id = 2;
 }
-message FindRequest{
+message FindByPostsRequest{
   int32 page_size = 1;
   string page_token = 2;
 }
-message FindResponse{
+message FindByPostsResponse{
+  repeated Like likes = 1;
+  string next_page_token = 2;
+}
+message FindByCommentsRequest{
+  int32 page_size = 1;
+  string page_token = 2;
+}
+message FindByCommentsResponse{
   repeated Like likes = 1;
   string next_page_token = 2;
 }

@@ -9,6 +9,7 @@ service LikeService{
   rpc Add(AddRequest) returns (AddResponse);
   rpc Delete(DeleteRequest) returns (DeleteRequest);
   rpc Count(CountRequest) returns (CountResponse);
-  rpc Find(FindRequest) returns (FindResponse);
+  rpc FindByPosts(FindByPostsRequest) returns (FindByPostsResponse);
+  rpc FindByComments(FindByCommentsRequest) returns (FindByCommentsResponse);
 }
 

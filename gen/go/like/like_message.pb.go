@@ -539,7 +539,7 @@ func (x *CountRequest) GetPostId() int32 {
 	return 0
 }
 
-type FindRequest struct {
+type FindByPostsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -548,8 +548,8 @@ type FindRequest struct {
 	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 }
 
-func (x *FindRequest) Reset() {
-	*x = FindRequest{}
+func (x *FindByPostsRequest) Reset() {
+	*x = FindByPostsRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_like_message_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -557,13 +557,13 @@ func (x *FindRequest) Reset() {
 	}
 }
 
-func (x *FindRequest) String() string {
+func (x *FindByPostsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FindRequest) ProtoMessage() {}
+func (*FindByPostsRequest) ProtoMessage() {}
 
-func (x *FindRequest) ProtoReflect() protoreflect.Message {
+func (x *FindByPostsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_like_message_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -575,26 +575,26 @@ func (x *FindRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FindRequest.ProtoReflect.Descriptor instead.
-func (*FindRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use FindByPostsRequest.ProtoReflect.Descriptor instead.
+func (*FindByPostsRequest) Descriptor() ([]byte, []int) {
 	return file_like_message_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *FindRequest) GetPageSize() int32 {
+func (x *FindByPostsRequest) GetPageSize() int32 {
 	if x != nil {
 		return x.PageSize
 	}
 	return 0
 }
 
-func (x *FindRequest) GetPageToken() string {
+func (x *FindByPostsRequest) GetPageToken() string {
 	if x != nil {
 		return x.PageToken
 	}
 	return ""
 }
 
-type FindResponse struct {
+type FindByPostsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -603,8 +603,8 @@ type FindResponse struct {
 	NextPageToken string  `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 }
 
-func (x *FindResponse) Reset() {
-	*x = FindResponse{}
+func (x *FindByPostsResponse) Reset() {
+	*x = FindByPostsResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_like_message_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -612,13 +612,13 @@ func (x *FindResponse) Reset() {
 	}
 }
 
-func (x *FindResponse) String() string {
+func (x *FindByPostsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*FindResponse) ProtoMessage() {}
+func (*FindByPostsResponse) ProtoMessage() {}
 
-func (x *FindResponse) ProtoReflect() protoreflect.Message {
+func (x *FindByPostsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_like_message_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -630,19 +630,129 @@ func (x *FindResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use FindResponse.ProtoReflect.Descriptor instead.
-func (*FindResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use FindByPostsResponse.ProtoReflect.Descriptor instead.
+func (*FindByPostsResponse) Descriptor() ([]byte, []int) {
 	return file_like_message_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *FindResponse) GetLikes() []*Like {
+func (x *FindByPostsResponse) GetLikes() []*Like {
 	if x != nil {
 		return x.Likes
 	}
 	return nil
 }
 
-func (x *FindResponse) GetNextPageToken() string {
+func (x *FindByPostsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type FindByCommentsRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PageSize  int32  `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+}
+
+func (x *FindByCommentsRequest) Reset() {
+	*x = FindByCommentsRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_like_message_proto_msgTypes[11]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FindByCommentsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindByCommentsRequest) ProtoMessage() {}
+
+func (x *FindByCommentsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_like_message_proto_msgTypes[11]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindByCommentsRequest.ProtoReflect.Descriptor instead.
+func (*FindByCommentsRequest) Descriptor() ([]byte, []int) {
+	return file_like_message_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *FindByCommentsRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *FindByCommentsRequest) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type FindByCommentsResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Likes         []*Like `protobuf:"bytes,1,rep,name=likes,proto3" json:"likes,omitempty"`
+	NextPageToken string  `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+}
+
+func (x *FindByCommentsResponse) Reset() {
+	*x = FindByCommentsResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_like_message_proto_msgTypes[12]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *FindByCommentsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindByCommentsResponse) ProtoMessage() {}
+
+func (x *FindByCommentsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_like_message_proto_msgTypes[12]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindByCommentsResponse.ProtoReflect.Descriptor instead.
+func (*FindByCommentsResponse) Descriptor() ([]byte, []int) {
+	return file_like_message_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *FindByCommentsResponse) GetLikes() []*Like {
+	if x != nil {
+		return x.Likes
+	}
+	return nil
+}
+
+func (x *FindByCommentsResponse) GetNextPageToken() string {
 	if x != nil {
 		return x.NextPageToken
 	}
@@ -697,18 +807,31 @@ var file_like_message_proto_rawDesc = []byte{
 	0x01, 0x28, 0x05, 0x52, 0x05, 0x63, 0x6f, 0x75, 0x6e, 0x74, 0x22, 0x27, 0x0a, 0x0c, 0x43, 0x6f,
 	0x75, 0x6e, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x17, 0x0a, 0x07, 0x70, 0x6f,
 	0x73, 0x74, 0x5f, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x70, 0x6f, 0x73,
-	0x74, 0x49, 0x64, 0x22, 0x49, 0x0a, 0x0b, 0x46, 0x69, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12,
-	0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x58,
-	0x0a, 0x0c, 0x46, 0x69, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20,
-	0x0a, 0x05, 0x6c, 0x69, 0x6b, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e,
-	0x6c, 0x69, 0x6b, 0x65, 0x2e, 0x4c, 0x69, 0x6b, 0x65, 0x52, 0x05, 0x6c, 0x69, 0x6b, 0x65, 0x73,
-	0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f,
-	0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50,
-	0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42, 0x0c, 0x5a, 0x0a, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x2f, 0x6c, 0x69, 0x6b, 0x65, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x74, 0x49, 0x64, 0x22, 0x50, 0x0a, 0x12, 0x46, 0x69, 0x6e, 0x64, 0x42, 0x79, 0x50, 0x6f, 0x73,
+	0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67,
+	0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61,
+	0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74,
+	0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x70, 0x61, 0x67, 0x65,
+	0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x5f, 0x0a, 0x13, 0x46, 0x69, 0x6e, 0x64, 0x42, 0x79, 0x50,
+	0x6f, 0x73, 0x74, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x05,
+	0x6c, 0x69, 0x6b, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x6c, 0x69,
+	0x6b, 0x65, 0x2e, 0x4c, 0x69, 0x6b, 0x65, 0x52, 0x05, 0x6c, 0x69, 0x6b, 0x65, 0x73, 0x12, 0x26,
+	0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74, 0x5f, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65,
+	0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67,
+	0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x53, 0x0a, 0x15, 0x46, 0x69, 0x6e, 0x64, 0x42, 0x79,
+	0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12,
+	0x1b, 0x0a, 0x09, 0x70, 0x61, 0x67, 0x65, 0x5f, 0x73, 0x69, 0x7a, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x05, 0x52, 0x08, 0x70, 0x61, 0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x12, 0x1d, 0x0a, 0x0a,
+	0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x09, 0x70, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x22, 0x62, 0x0a, 0x16, 0x46,
+	0x69, 0x6e, 0x64, 0x42, 0x79, 0x43, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x20, 0x0a, 0x05, 0x6c, 0x69, 0x6b, 0x65, 0x73, 0x18, 0x01,
+	0x20, 0x03, 0x28, 0x0b, 0x32, 0x0a, 0x2e, 0x6c, 0x69, 0x6b, 0x65, 0x2e, 0x4c, 0x69, 0x6b, 0x65,
+	0x52, 0x05, 0x6c, 0x69, 0x6b, 0x65, 0x73, 0x12, 0x26, 0x0a, 0x0f, 0x6e, 0x65, 0x78, 0x74, 0x5f,
+	0x70, 0x61, 0x67, 0x65, 0x5f, 0x74, 0x6f, 0x6b, 0x65, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0d, 0x6e, 0x65, 0x78, 0x74, 0x50, 0x61, 0x67, 0x65, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x42,
+	0x0c, 0x5a, 0x0a, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x6c, 0x69, 0x6b, 0x65, 0x62, 0x06, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -723,27 +846,30 @@ func file_like_message_proto_rawDescGZIP() []byte {
 	return file_like_message_proto_rawDescData
 }
 
-var file_like_message_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_like_message_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_like_message_proto_goTypes = []any{
-	(*Like)(nil),           // 0: like.Like
-	(*ExistsRequest)(nil),  // 1: like.ExistsRequest
-	(*ExistsResponse)(nil), // 2: like.ExistsResponse
-	(*AddRequest)(nil),     // 3: like.AddRequest
-	(*AddResponse)(nil),    // 4: like.AddResponse
-	(*DeleteRequest)(nil),  // 5: like.DeleteRequest
-	(*DeleteResponse)(nil), // 6: like.DeleteResponse
-	(*CountResponse)(nil),  // 7: like.CountResponse
-	(*CountRequest)(nil),   // 8: like.CountRequest
-	(*FindRequest)(nil),    // 9: like.FindRequest
-	(*FindResponse)(nil),   // 10: like.FindResponse
+	(*Like)(nil),                   // 0: like.Like
+	(*ExistsRequest)(nil),          // 1: like.ExistsRequest
+	(*ExistsResponse)(nil),         // 2: like.ExistsResponse
+	(*AddRequest)(nil),             // 3: like.AddRequest
+	(*AddResponse)(nil),            // 4: like.AddResponse
+	(*DeleteRequest)(nil),          // 5: like.DeleteRequest
+	(*DeleteResponse)(nil),         // 6: like.DeleteResponse
+	(*CountResponse)(nil),          // 7: like.CountResponse
+	(*CountRequest)(nil),           // 8: like.CountRequest
+	(*FindByPostsRequest)(nil),     // 9: like.FindByPostsRequest
+	(*FindByPostsResponse)(nil),    // 10: like.FindByPostsResponse
+	(*FindByCommentsRequest)(nil),  // 11: like.FindByCommentsRequest
+	(*FindByCommentsResponse)(nil), // 12: like.FindByCommentsResponse
 }
 var file_like_message_proto_depIdxs = []int32{
-	0, // 0: like.FindResponse.likes:type_name -> like.Like
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: like.FindByPostsResponse.likes:type_name -> like.Like
+	0, // 1: like.FindByCommentsResponse.likes:type_name -> like.Like
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_like_message_proto_init() }
@@ -861,7 +987,7 @@ func file_like_message_proto_init() {
 			}
 		}
 		file_like_message_proto_msgTypes[9].Exporter = func(v any, i int) any {
-			switch v := v.(*FindRequest); i {
+			switch v := v.(*FindByPostsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -873,7 +999,31 @@ func file_like_message_proto_init() {
 			}
 		}
 		file_like_message_proto_msgTypes[10].Exporter = func(v any, i int) any {
-			switch v := v.(*FindResponse); i {
+			switch v := v.(*FindByPostsResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_like_message_proto_msgTypes[11].Exporter = func(v any, i int) any {
+			switch v := v.(*FindByCommentsRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_like_message_proto_msgTypes[12].Exporter = func(v any, i int) any {
+			switch v := v.(*FindByCommentsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -891,7 +1041,7 @@ func file_like_message_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_like_message_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
