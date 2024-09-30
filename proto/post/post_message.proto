@@ -94,7 +94,7 @@ message FileCreateOrUpdate{
 
 message CreatePostRequest{
   int64 id = 1;
-  string author_id = 2;
+  int64 author_id = 2;
   string title = 3;
   string description = 4;
   PostType type = 5;
@@ -121,7 +121,7 @@ message DeletePostResponse{
 }
 
 message HidePostRequest{
-  int64 id = 1;
+  int64 post_id = 1;
   int64 author_id = 2;
 }
 message HidePostResponse{
