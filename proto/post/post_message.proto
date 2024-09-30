@@ -99,7 +99,7 @@ message CreatePostRequest{
   string description = 4;
   PostType type = 5;
   FileCreateOrUpdate image = 6;
-  repeated string categories = 7;
+  repeated int64 categories = 7;
   repeated PostContentCreateOrUpdate contents = 8;
 }
 
