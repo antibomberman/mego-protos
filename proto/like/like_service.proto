@@ -8,7 +8,7 @@ service LikeService{
 
   rpc Add(AddRequest) returns (AddResponse);
 
-  rpc Delete(DeleteRequest) returns (DeleteRequest);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
 
   rpc Count(CountRequest) returns (CountResponse);
 

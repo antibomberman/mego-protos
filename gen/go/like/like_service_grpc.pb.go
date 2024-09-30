@@ -33,7 +33,7 @@ const (
 type LikeServiceClient interface {
 	Exists(ctx context.Context, in *ExistsRequest, opts ...grpc.CallOption) (*ExistsResponse, error)
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
-	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteRequest, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	Count(ctx context.Context, in *CountRequest, opts ...grpc.CallOption) (*CountResponse, error)
 	FindByPosts(ctx context.Context, in *FindByPostsRequest, opts ...grpc.CallOption) (*FindByPostsResponse, error)
 	FindByComments(ctx context.Context, in *FindByCommentsRequest, opts ...grpc.CallOption) (*FindByCommentsResponse, error)
@@ -67,9 +67,9 @@ func (c *likeServiceClient) Add(ctx context.Context, in *AddRequest, opts ...grp
 	return out, nil
 }
 
-func (c *likeServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteRequest, error) {
+func (c *likeServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(DeleteRequest)
+	out := new(DeleteResponse)
 	err := c.cc.Invoke(ctx, LikeService_Delete_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -113,7 +113,7 @@ func (c *likeServiceClient) FindByComments(ctx context.Context, in *FindByCommen
 type LikeServiceServer interface {
 	Exists(context.Context, *ExistsRequest) (*ExistsResponse, error)
 	Add(context.Context, *AddRequest) (*AddResponse, error)
-	Delete(context.Context, *DeleteRequest) (*DeleteRequest, error)
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	Count(context.Context, *CountRequest) (*CountResponse, error)
 	FindByPosts(context.Context, *FindByPostsRequest) (*FindByPostsResponse, error)
 	FindByComments(context.Context, *FindByCommentsRequest) (*FindByCommentsResponse, error)
@@ -133,7 +133,7 @@ func (UnimplementedLikeServiceServer) Exists(context.Context, *ExistsRequest) (*
 func (UnimplementedLikeServiceServer) Add(context.Context, *AddRequest) (*AddResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
 }
-func (UnimplementedLikeServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteRequest, error) {
+func (UnimplementedLikeServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedLikeServiceServer) Count(context.Context, *CountRequest) (*CountResponse, error) {
