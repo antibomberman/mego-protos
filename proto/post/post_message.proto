@@ -126,8 +126,6 @@ message HidePostRequest{
 message HidePostResponse{
 }
 
-
-
 message FindCategoryRequest{
 
 }
