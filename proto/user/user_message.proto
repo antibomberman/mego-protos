@@ -3,7 +3,7 @@ package user;
 
 option go_package = "proto/user";
 import "google/protobuf/timestamp.proto";
-message Id {string id = 1;}
+message Id {int64 id = 1;}
 message Email {string email = 1;}
 message Token {string token = 1;}
 message Empty{
@@ -22,7 +22,7 @@ message Avatar {
 
 
 message UserDetails {
-  string id = 1;
+  int64 id = 1;
   string first_name = 2;
   string middle_name = 3;
   string last_name = 4;
@@ -52,7 +52,7 @@ message CreateUserRequest {
 }
 
 message UpdateUserRequest {
-  string id = 1;
+  int64 id = 1;
   string first_name = 2;
   string middle_name = 3;
   string last_name = 4;
@@ -63,7 +63,7 @@ message UpdateUserRequest {
   string lang = 9;
 }
 message UpdateProfileRequest{
-  string id = 1;
+  int64 id = 1;
   string FirstName = 2;
   string MiddleName = 3;
   string LastName = 4;
@@ -71,28 +71,28 @@ message UpdateProfileRequest{
   NewAvatar avatar = 6;
 }
 message UpdateLangRequest{
-  string id = 1;
+  int64 id = 1;
   string lang = 2;
 }
 message UpdateLangResponse{
   bool success = 1;
 }
 message UpdateThemeRequest{
-  string id = 1;
+  int64 id = 1;
   string theme = 2;
 }
 message UpdateThemeResponse{
   bool success = 1;
 }
 message UpdateEmailRequest{
-  string user_id = 1;
+  int64 user_id = 1;
   string code = 2;
 }
 message UpdateEmailResponse{
   bool success = 1;
 }
 message UpdateEmailSendCodeRequest{
-  string user_id = 1;
+  int64 user_id = 1;
   string email = 2;
 }
 message UpdateEmailSendCodeResponse{
