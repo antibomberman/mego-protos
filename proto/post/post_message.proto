@@ -91,7 +91,6 @@ message FileCreateOrUpdate{
   string content_type = 2;
   bytes data = 3;
 }
-
 message CreatePostRequest{
   int64 id = 1;
   int64 author_id = 2;
