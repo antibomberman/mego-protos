@@ -6,7 +6,8 @@ option go_package = "proto/like";
 service LikeService{
 
   rpc Exists(ExistsRequest) returns (ExistsResponse);
-  rpc Like(LikeRequest) returns (LikeResponse);
+  rpc Add(AddRequest) returns (AddResponse);
+  rpc Delete(DeleteRequest) returns (DeleteRequest);
   rpc Count(CountRequest) returns (CountResponse);
   rpc Find(FindRequest) returns (FindResponse);
 }
