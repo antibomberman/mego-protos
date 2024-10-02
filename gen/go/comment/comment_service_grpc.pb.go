@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CommentService_Find_FullMethodName   = "/comment.CommentService/Find"
-	CommentService_Create_FullMethodName = "/comment.CommentService/Create"
-	CommentService_Delete_FullMethodName = "/comment.CommentService/Delete"
-	CommentService_Count_FullMethodName  = "/comment.CommentService/Count"
+	CommentService_Find_FullMethodName    = "/comment.CommentService/Find"
+	CommentService_GetById_FullMethodName = "/comment.CommentService/GetById"
+	CommentService_Create_FullMethodName  = "/comment.CommentService/Create"
+	CommentService_Delete_FullMethodName  = "/comment.CommentService/Delete"
+	CommentService_Count_FullMethodName   = "/comment.CommentService/Count"
 )
 
 // CommentServiceClient is the client API for CommentService service.
@@ -30,6 +31,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CommentServiceClient interface {
 	Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error)
+	GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Comment, error)
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	Count(ctx context.Context, in *CountRequest, opts ...grpc.CallOption) (*CountResponse, error)
@@ -47,6 +49,16 @@ func (c *commentServiceClient) Find(ctx context.Context, in *FindRequest, opts .
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FindResponse)
 	err := c.cc.Invoke(ctx, CommentService_Find_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *commentServiceClient) GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Comment, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Comment)
+	err := c.cc.Invoke(ctx, CommentService_GetById_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,6 +100,7 @@ func (c *commentServiceClient) Count(ctx context.Context, in *CountRequest, opts
 // for forward compatibility.
 type CommentServiceServer interface {
 	Find(context.Context, *FindRequest) (*FindResponse, error)
+	GetById(context.Context, *GetByIdRequest) (*Comment, error)
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	Count(context.Context, *CountRequest) (*CountResponse, error)
@@ -103,6 +116,9 @@ type UnimplementedCommentServiceServer struct{}
 
 func (UnimplementedCommentServiceServer) Find(context.Context, *FindRequest) (*FindResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
+}
+func (UnimplementedCommentServiceServer) GetById(context.Context, *GetByIdRequest) (*Comment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
 }
 func (UnimplementedCommentServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
@@ -148,6 +164,24 @@ func _CommentService_Find_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CommentServiceServer).Find(ctx, req.(*FindRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CommentService_GetById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommentServiceServer).GetById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CommentService_GetById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommentServiceServer).GetById(ctx, req.(*GetByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -216,6 +250,10 @@ var CommentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Find",
 			Handler:    _CommentService_Find_Handler,
+		},
+		{
+			MethodName: "GetById",
+			Handler:    _CommentService_GetById_Handler,
 		},
 		{
 			MethodName: "Create",

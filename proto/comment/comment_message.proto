@@ -61,3 +61,7 @@ message CountRequest{
 message CountResponse{
   int32 count = 1;
 }
+
+message GetByIdRequest{
+  int64 id = 1;
+}
