@@ -132,18 +132,22 @@ message FindCategoryRequest{
 message FindCategoryResponse{
   repeated Category categories = 1;
 }
+
 message CreateCategoryRequest{
   string name = 1;
   FileCreateOrUpdate icon = 2;
 }
+
 message UpdateCategoryRequest{
   int64 id = 1;
   string name = 2;
   FileCreateOrUpdate icon = 3;
 }
+
 message DeleteCategoryRequest{
   int64 id = 1;
 }
+
 message ExistsResponse{
   bool exists = 1;
 }
