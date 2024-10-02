@@ -144,3 +144,6 @@ message UpdateCategoryRequest{
 message DeleteCategoryRequest{
   int64 id = 1;
 }
+message ExistsResponse{
+  bool exists = 1;
+}

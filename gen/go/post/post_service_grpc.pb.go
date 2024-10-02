@@ -22,6 +22,7 @@ const (
 	PostService_FindPost_FullMethodName       = "/post.PostService/FindPost"
 	PostService_CreatePost_FullMethodName     = "/post.PostService/CreatePost"
 	PostService_GetById_FullMethodName        = "/post.PostService/GetById"
+	PostService_Exists_FullMethodName         = "/post.PostService/Exists"
 	PostService_GetByAuthor_FullMethodName    = "/post.PostService/GetByAuthor"
 	PostService_UpdatePost_FullMethodName     = "/post.PostService/UpdatePost"
 	PostService_DeletePost_FullMethodName     = "/post.PostService/DeletePost"
@@ -39,6 +40,7 @@ type PostServiceClient interface {
 	FindPost(ctx context.Context, in *FindPostRequest, opts ...grpc.CallOption) (*FindPostResponse, error)
 	CreatePost(ctx context.Context, in *CreatePostRequest, opts ...grpc.CallOption) (*PostDetail, error)
 	GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*PostDetail, error)
+	Exists(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*ExistsResponse, error)
 	GetByAuthor(ctx context.Context, in *GetByAuthorRequest, opts ...grpc.CallOption) (*GetByAuthorResponse, error)
 	UpdatePost(ctx context.Context, in *UpdatePostRequest, opts ...grpc.CallOption) (*PostDetail, error)
 	DeletePost(ctx context.Context, in *DeletePostRequest, opts ...grpc.CallOption) (*DeletePostResponse, error)
@@ -82,6 +84,16 @@ func (c *postServiceClient) GetById(ctx context.Context, in *GetByIdRequest, opt
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(PostDetail)
 	err := c.cc.Invoke(ctx, PostService_GetById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *postServiceClient) Exists(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*ExistsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExistsResponse)
+	err := c.cc.Invoke(ctx, PostService_Exists_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -175,6 +187,7 @@ type PostServiceServer interface {
 	FindPost(context.Context, *FindPostRequest) (*FindPostResponse, error)
 	CreatePost(context.Context, *CreatePostRequest) (*PostDetail, error)
 	GetById(context.Context, *GetByIdRequest) (*PostDetail, error)
+	Exists(context.Context, *GetByIdRequest) (*ExistsResponse, error)
 	GetByAuthor(context.Context, *GetByAuthorRequest) (*GetByAuthorResponse, error)
 	UpdatePost(context.Context, *UpdatePostRequest) (*PostDetail, error)
 	DeletePost(context.Context, *DeletePostRequest) (*DeletePostResponse, error)
@@ -202,6 +215,9 @@ func (UnimplementedPostServiceServer) CreatePost(context.Context, *CreatePostReq
 }
 func (UnimplementedPostServiceServer) GetById(context.Context, *GetByIdRequest) (*PostDetail, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
+}
+func (UnimplementedPostServiceServer) Exists(context.Context, *GetByIdRequest) (*ExistsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Exists not implemented")
 }
 func (UnimplementedPostServiceServer) GetByAuthor(context.Context, *GetByAuthorRequest) (*GetByAuthorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByAuthor not implemented")
@@ -298,6 +314,24 @@ func _PostService_GetById_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PostServiceServer).GetById(ctx, req.(*GetByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PostService_Exists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PostServiceServer).Exists(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PostService_Exists_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PostServiceServer).Exists(ctx, req.(*GetByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -464,6 +498,10 @@ var PostService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetById",
 			Handler:    _PostService_GetById_Handler,
+		},
+		{
+			MethodName: "Exists",
+			Handler:    _PostService_Exists_Handler,
 		},
 		{
 			MethodName: "GetByAuthor",

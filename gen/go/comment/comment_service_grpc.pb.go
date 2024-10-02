@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	CommentService_Find_FullMethodName    = "/comment.CommentService/Find"
 	CommentService_GetById_FullMethodName = "/comment.CommentService/GetById"
+	CommentService_Exists_FullMethodName  = "/comment.CommentService/Exists"
 	CommentService_Create_FullMethodName  = "/comment.CommentService/Create"
 	CommentService_Delete_FullMethodName  = "/comment.CommentService/Delete"
 	CommentService_Count_FullMethodName   = "/comment.CommentService/Count"
@@ -32,6 +33,7 @@ const (
 type CommentServiceClient interface {
 	Find(ctx context.Context, in *FindRequest, opts ...grpc.CallOption) (*FindResponse, error)
 	GetById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Comment, error)
+	Exists(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*ExistsResponse, error)
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	Count(ctx context.Context, in *CountRequest, opts ...grpc.CallOption) (*CountResponse, error)
@@ -59,6 +61,16 @@ func (c *commentServiceClient) GetById(ctx context.Context, in *GetByIdRequest, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Comment)
 	err := c.cc.Invoke(ctx, CommentService_GetById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *commentServiceClient) Exists(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*ExistsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ExistsResponse)
+	err := c.cc.Invoke(ctx, CommentService_Exists_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -101,6 +113,7 @@ func (c *commentServiceClient) Count(ctx context.Context, in *CountRequest, opts
 type CommentServiceServer interface {
 	Find(context.Context, *FindRequest) (*FindResponse, error)
 	GetById(context.Context, *GetByIdRequest) (*Comment, error)
+	Exists(context.Context, *GetByIdRequest) (*ExistsResponse, error)
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
 	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
 	Count(context.Context, *CountRequest) (*CountResponse, error)
@@ -119,6 +132,9 @@ func (UnimplementedCommentServiceServer) Find(context.Context, *FindRequest) (*F
 }
 func (UnimplementedCommentServiceServer) GetById(context.Context, *GetByIdRequest) (*Comment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
+}
+func (UnimplementedCommentServiceServer) Exists(context.Context, *GetByIdRequest) (*ExistsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Exists not implemented")
 }
 func (UnimplementedCommentServiceServer) Create(context.Context, *CreateRequest) (*CreateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
@@ -182,6 +198,24 @@ func _CommentService_GetById_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CommentServiceServer).GetById(ctx, req.(*GetByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CommentService_Exists_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CommentServiceServer).Exists(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CommentService_Exists_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CommentServiceServer).Exists(ctx, req.(*GetByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -254,6 +288,10 @@ var CommentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetById",
 			Handler:    _CommentService_GetById_Handler,
+		},
+		{
+			MethodName: "Exists",
+			Handler:    _CommentService_Exists_Handler,
 		},
 		{
 			MethodName: "Create",

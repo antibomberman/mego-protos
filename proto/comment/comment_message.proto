@@ -65,3 +65,7 @@ message CountResponse{
 message GetByIdRequest{
   int64 id = 1;
 }
+
+message ExistsResponse{
+  bool exists = 1;
+}
